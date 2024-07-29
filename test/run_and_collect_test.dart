@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:coverage/coverage.dart';
+import 'package:glob/glob.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
@@ -29,14 +30,21 @@ void main() {
       expect(sampleCoverageData['hits'], isNotEmpty);
     }
 
-    final hitMap = await HitMap.parseJson(coverage, checkIgnoredLines: true);
+    // final ignoredGlobs = {Glob('**/*g.dart')};
+    final ignoredGlobs = <Glob>{};
+
+    final hitMap = await HitMap.parseJson(
+      coverage,
+      checkIgnoredLines: true,
+      ignoreGlobs: ignoredGlobs,
+    );
     checkHitmap(hitMap);
     final resolver = await Resolver.create();
     final ignoredLinesInFilesCache = <String, List<List<int>>?>{};
     final hitMap2 = HitMap.parseJsonSync(coverage,
         checkIgnoredLines: true,
-        // TODO: Handle
-        ignoreGlobs: {},
+        ignoreGlobs: ignoredGlobs,
+        // ignoreGlobs: {},
         ignoredLinesInFilesCache: ignoredLinesInFilesCache,
         resolver: resolver);
     checkHitmap(hitMap2);
@@ -46,8 +54,8 @@ void main() {
     // so providing a resolver that throws when asked for files should be ok.
     final hitMap3 = HitMap.parseJsonSync(coverage,
         checkIgnoredLines: true,
-        // TODO: Handle
-        ignoreGlobs: {},
+        ignoreGlobs: ignoredGlobs,
+        // ignoreGlobs: {},
         ignoredLinesInFilesCache: ignoredLinesInFilesCache,
         resolver: ThrowingResolver());
     checkHitmap(hitMap3);
@@ -102,28 +110,29 @@ void checkHitmap(Map<String, HitMap> hitMap) {
   final actualHitMap = hitMap[_isolateLibFileUri];
   final actualLineHits = actualHitMap?.lineHits;
   final expectedLineHits = {
-    11: 1,
-    12: 1,
     13: 1,
-    15: 0,
-    19: 1,
-    23: 1,
-    24: 2,
-    28: 1,
-    29: 1,
+    14: 1,
+    15: 1,
+    17: 0,
+    21: 1,
+    25: 1,
+    26: 2,
     30: 1,
-    32: 0,
-    38: 1,
-    39: 1,
+    31: 1,
+    32: 1,
+    34: 0,
+    40: 1,
     41: 1,
-    42: 3,
     43: 1,
     44: 3,
     45: 1,
-    48: 1,
+    46: 3,
+    47: 1,
     49: 1,
-    59: 1,
-    60: 1
+    51: 1,
+    52: 1,
+    62: 1,
+    63: 1,
   };
 
   expect(actualLineHits, expectedLineHits);
