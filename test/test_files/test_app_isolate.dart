@@ -6,8 +6,6 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 
-part 'test_app_isolate.g.dart';
-
 const int answer = 42;
 
 String fooSync(int x) {
@@ -46,7 +44,6 @@ void isolateTask(List threeThings) {
     final sum = (threeThings[1] as int) + (threeThings[2] as int);
     port.send(sum);
   });
-  generatedFooSync(answer, answer);
 
   final bar = BarClass(123);
   bar.baz();

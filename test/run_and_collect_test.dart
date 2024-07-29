@@ -12,6 +12,8 @@ import 'test_util.dart';
 final _isolateLibPath = p.join('test', 'test_files', 'test_app_isolate.dart');
 
 final _sampleAppFileUri = p.toUri(p.absolute(testAppPath)).toString();
+final _sampleGeneratedAppFileUri =
+    p.toUri(p.absolute(testAppGeneratedPath)).toString();
 final _isolateLibFileUri = p.toUri(p.absolute(_isolateLibPath)).toString();
 
 void main() {
@@ -30,8 +32,8 @@ void main() {
       expect(sampleCoverageData['hits'], isNotEmpty);
     }
 
-    // final ignoredGlobs = {Glob('**/*g.dart')};
-    final ignoredGlobs = <Glob>{};
+    final ignoredGlobs = {Glob('**/*g.dart')};
+    // final ignoredGlobs = <Glob>{};
 
     final hitMap = await HitMap.parseJson(
       coverage,
@@ -85,7 +87,7 @@ class ThrowingResolver implements Resolver {
 
 void checkIgnoredLinesInFilesCache(
     Map<String, List<List<int>>?> ignoredLinesInFilesCache) {
-  expect(ignoredLinesInFilesCache.length, 3);
+  expect(ignoredLinesInFilesCache.length, 4);
   final keys = ignoredLinesInFilesCache.keys.toList();
   final testAppKey =
       keys.where((element) => element.endsWith('test_app.dart')).single;
@@ -106,33 +108,33 @@ void checkIgnoredLinesInFilesCache(
 
 void checkHitmap(Map<String, HitMap> hitMap) {
   expect(hitMap, isNot(contains(_sampleAppFileUri)));
+  expect(hitMap, isNot(contains(_sampleGeneratedAppFileUri)));
 
   final actualHitMap = hitMap[_isolateLibFileUri];
   final actualLineHits = actualHitMap?.lineHits;
   final expectedLineHits = {
+    11: 1,
+    12: 1,
     13: 1,
-    14: 1,
-    15: 1,
-    17: 0,
-    21: 1,
-    25: 1,
-    26: 2,
+    15: 0,
+    19: 1,
+    23: 1,
+    24: 2,
+    28: 1,
+    29: 1,
     30: 1,
-    31: 1,
-    32: 1,
-    34: 0,
-    40: 1,
+    32: 0,
+    38: 1,
+    39: 1,
     41: 1,
+    42: 3,
     43: 1,
     44: 3,
     45: 1,
-    46: 3,
-    47: 1,
+    48: 1,
     49: 1,
-    51: 1,
-    52: 1,
-    62: 1,
-    63: 1,
+    59: 1,
+    60: 1
   };
 
   expect(actualLineHits, expectedLineHits);
