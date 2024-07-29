@@ -25,7 +25,6 @@ Future<void> main(List<String> arguments) async {
       options.waitPaused,
       options.includeDart,
       options.scopedOutput,
-      options.ignoreGlobs,
       timeout: options.timeout,
       functionCoverage: options.functionCoverage,
       branchCoverage: options.branchCoverage,
@@ -43,16 +42,16 @@ Future<void> main(List<String> arguments) async {
 
 class Options {
   Options(
-      this.serviceUri,
-      this.out,
-      this.timeout,
-      this.waitPaused,
-      this.resume,
-      this.includeDart,
-      this.functionCoverage,
-      this.branchCoverage,
-      this.scopedOutput,
-      this.ignoreGlobs);
+    this.serviceUri,
+    this.out,
+    this.timeout,
+    this.waitPaused,
+    this.resume,
+    this.includeDart,
+    this.functionCoverage,
+    this.branchCoverage,
+    this.scopedOutput,
+  );
 
   final Uri serviceUri;
   final IOSink out;
@@ -63,7 +62,6 @@ class Options {
   final bool functionCoverage;
   final bool branchCoverage;
   final Set<String> scopedOutput;
-  final Set<String> ignoreGlobs;
 }
 
 Options _parseArgs(List<String> arguments) {
@@ -84,12 +82,6 @@ Options _parseArgs(List<String> arguments) {
     ..addMultiOption('scope-output',
         help: 'restrict coverage results so that only scripts that start with '
             'the provided package path are considered')
-    ..addMultiOption(
-      'ignore-files',
-      abbr: 'i',
-      defaultsTo: [],
-      help: 'Ignore files by glob patterns',
-    )
     ..addFlag('wait-paused',
         abbr: 'w',
         defaultsTo: false,
@@ -139,8 +131,6 @@ Options _parseArgs(List<String> arguments) {
   }
 
   final scopedOutput = args['scope-output'] as List<String>;
-  final ignoreGlobs = args['ignore-globs'] as List<String>;
-
   IOSink out;
   if (args['out'] == 'stdout') {
     out = stdout;
@@ -161,6 +151,5 @@ Options _parseArgs(List<String> arguments) {
     args['function-coverage'] as bool,
     args['branch-coverage'] as bool,
     scopedOutput.toSet(),
-    ignoreGlobs.toSet(),
   );
 }

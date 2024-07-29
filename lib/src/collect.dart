@@ -57,8 +57,7 @@ Future<Map<String, dynamic>> collect(
   bool resume,
   bool waitPaused,
   bool includeDart,
-  Set<String>? scopedOutput,
-  Set<String>? ignoreGlobs, {
+  Set<String>? scopedOutput, {
   Set<String>? isolateIds,
   Duration? timeout,
   bool functionCoverage = false,

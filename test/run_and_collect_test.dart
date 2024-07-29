@@ -35,6 +35,8 @@ void main() {
     final ignoredLinesInFilesCache = <String, List<List<int>>?>{};
     final hitMap2 = HitMap.parseJsonSync(coverage,
         checkIgnoredLines: true,
+        // TODO: Handle
+        ignoreGlobs: {},
         ignoredLinesInFilesCache: ignoredLinesInFilesCache,
         resolver: resolver);
     checkHitmap(hitMap2);
@@ -44,6 +46,8 @@ void main() {
     // so providing a resolver that throws when asked for files should be ok.
     final hitMap3 = HitMap.parseJsonSync(coverage,
         checkIgnoredLines: true,
+        // TODO: Handle
+        ignoreGlobs: {},
         ignoredLinesInFilesCache: ignoredLinesInFilesCache,
         resolver: ThrowingResolver());
     checkHitmap(hitMap3);
