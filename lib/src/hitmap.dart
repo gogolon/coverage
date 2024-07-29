@@ -80,10 +80,6 @@ class HitMap {
           if (path != null) {
             var ignoreByGlob = false;
             for (final glob in ignoreGlobs) {
-              print(
-                'Checking glob ${glob.pattern} in $source: ${glob.matches(source)}',
-              );
-
               if (glob.matches(source)) {
                 // Null-entry indicates that the whole file was ignored.
                 ignoredLinesInFilesCache[source] = null;
@@ -91,8 +87,7 @@ class HitMap {
                 break;
               }
             }
-
-            if(ignoreByGlob) {
+            if (ignoreByGlob) {
               continue;
             }
 

@@ -33,7 +33,6 @@ void main() {
     }
 
     final ignoredGlobs = {Glob('**/*g.dart')};
-    // final ignoredGlobs = <Glob>{};
 
     final hitMap = await HitMap.parseJson(
       coverage,
@@ -46,7 +45,6 @@ void main() {
     final hitMap2 = HitMap.parseJsonSync(coverage,
         checkIgnoredLines: true,
         ignoreGlobs: ignoredGlobs,
-        // ignoreGlobs: {},
         ignoredLinesInFilesCache: ignoredLinesInFilesCache,
         resolver: resolver);
     checkHitmap(hitMap2);
@@ -57,7 +55,6 @@ void main() {
     final hitMap3 = HitMap.parseJsonSync(coverage,
         checkIgnoredLines: true,
         ignoreGlobs: ignoredGlobs,
-        // ignoreGlobs: {},
         ignoredLinesInFilesCache: ignoredLinesInFilesCache,
         resolver: ThrowingResolver());
     checkHitmap(hitMap3);
