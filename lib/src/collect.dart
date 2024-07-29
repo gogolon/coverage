@@ -52,14 +52,20 @@ const _debugTokenPositions = bool.fromEnvironment('DEBUG_COVERAGE');
 ///
 /// [serviceOverrideForTesting] is for internal testing only, and should not be
 /// set by users.
-Future<Map<String, dynamic>> collect(Uri serviceUri, bool resume,
-    bool waitPaused, bool includeDart, Set<String>? scopedOutput,
-    {Set<String>? isolateIds,
-    Duration? timeout,
-    bool functionCoverage = false,
-    bool branchCoverage = false,
-    Map<String, Set<int>>? coverableLineCache,
-    VmService? serviceOverrideForTesting}) async {
+Future<Map<String, dynamic>> collect(
+  Uri serviceUri,
+  bool resume,
+  bool waitPaused,
+  bool includeDart,
+  Set<String>? scopedOutput,
+  Set<String>? ignoreGlobs, {
+  Set<String>? isolateIds,
+  Duration? timeout,
+  bool functionCoverage = false,
+  bool branchCoverage = false,
+  Map<String, Set<int>>? coverableLineCache,
+  VmService? serviceOverrideForTesting,
+}) async {
   scopedOutput ??= <String>{};
 
   late VmService service;

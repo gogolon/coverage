@@ -75,6 +75,14 @@ class HitMap {
         } else {
           final path = resolver.resolve(source);
           if (path != null) {
+            // TODO: Pass a map of excluded files
+            final isInMap = false;
+            if (isInMap) {
+              // Null-entry indicates that the whole file was ignored.
+              ignoredLinesInFilesCache[source] = null;
+              continue;
+            }
+
             final lines = loader.loadSync(path) ?? [];
             ignoredLinesList = getIgnoredLines(path, lines);
 
